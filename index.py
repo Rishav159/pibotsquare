@@ -4,17 +4,55 @@ from flask import Flask, Response, send_from_directory, render_template
 from camera import VideoCamera
 from flask_socketio import SocketIO, emit
 
+import RPi.GPIO as GPIO
+import sys
+import time
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.cleanup()
+
+GPIO.setup(4, GPIO.OUT)  # right 
+GPIO.setup(17, GPIO.OUT) # right 
+GPIO.setup(27, GPIO.OUT)  # left
+GPIO.setup(22, GPIO.OUT)   # left
+
 app = Flask(__name__,static_url_path='/static')
 socketio = SocketIO(app)
 #----------------------Reddy-Area-----------------
+
 def forward():
-    print("forward")
+        GPIO.output(4, True)
+        GPIO.output(17, False)
+        GPIO.output(27, True)
+        GPIO.output(22, False)
+
 def backward():
-    print("Backward")
+        GPIO.output(4, False)
+        GPIO.output(17, True)
+        GPIO.output(27, False)
+        GPIO.output(22, True)
+
 def left():
-    print("Left")
+        GPIO.output(4, True)
+        GPIO.output(17, False)
+        GPIO.output(27, False)
+        GPIO.output(22, False)
+
 def right():
-    print("Right")
+        GPIO.output(4, False)
+        GPIO.output(17, False)
+        GPIO.output(27, True)
+        GPIO.output(22, False)
+
+def stop():
+        GPIO.output(4, False)
+        GPIO.output(17, False)
+        GPIO.output(27, False)
+        GPIO.output(22, False)
+
+
+
 def camera_up():
     print("Camera Up")
 def camera_down():
@@ -42,17 +80,22 @@ def handle_message(move):
     print (move)
     if move == 'f':
         forward()
+        stop()
     elif move == 'b':
         backward()
+        stop()
     elif move == 'l':
         left()
+        stop()
     elif move == 'r':
         right()
+        stop()
     elif move == 'u':
         camera_up()
     elif move == 'd':
         camera_down()
-
+    else:
+        GPIO.cleanup()
 
 if __name__ == '__main__':
     socketio.run(app,host='0.0.0.0', debug=False)
