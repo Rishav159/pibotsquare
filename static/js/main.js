@@ -2,6 +2,7 @@ var socket;
 function buttonPressed(btn,key){
   $('#'+btn).addClass("active");
   if(key){
+    console.log(socket);
     socket.emit('move',key);
   }
 }

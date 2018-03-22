@@ -6,6 +6,22 @@ from flask_socketio import SocketIO, emit
 
 app = Flask(__name__,static_url_path='/static')
 socketio = SocketIO(app)
+#----------------------Reddy-Area-----------------
+def forward():
+    print("forward")
+def backward():
+    print("Backward")
+def left():
+    print("Left")
+def right():
+    print("Right")
+def camera_up():
+    print("Camera Up")
+def camera_down():
+    print("Camera down")
+
+#-------------------------------------------------
+
 @app.route('/')
 def root_dir():
     return render_template('index.html')
@@ -23,7 +39,22 @@ def video_feed():
 
 @socketio.on('move')
 def handle_message(move):
-    print(move)
+    print (move)
+    if move == 'f':
+        forward()
+    elif move == 'b':
+        backward()
+    elif move == 'l':
+        left()
+    elif move == 'r':
+        right()
+    elif move == 'u':
+        camera_up()
+    elif move == 'd':
+        camera_down()
+
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app,host='0.0.0.0', debug=False)
+    #app.run(host='0.0.0.0', debug=False)
+
