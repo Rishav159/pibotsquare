@@ -7,8 +7,11 @@ function buttonPressed(btn,key){
   }
 }
 
-function buttonRelease(btn){
+function buttonRelease(btn,key){
   $('#'+btn).removeClass("active");
+  if(key){
+    socket.emit('move','s');
+  }
 }
 
 function getBase64Image(img) {
@@ -59,13 +62,13 @@ $(document).ready(function(){
     let key = e.originalEvent.key;
     switch (key) {
       case 'ArrowUp':
-      case 'w' : buttonRelease('forward-button'); break;
+      case 'w' : buttonRelease('forward-button','f'); break;
       case 'ArrowDown':
-      case 's' : buttonRelease('back-button'); break;
+      case 's' : buttonRelease('back-button','b'); break;
       case 'ArrowLeft':
-      case 'a' : buttonRelease('left-button'); break;
+      case 'a' : buttonRelease('left-button','l'); break;
       case 'ArrowRight':
-      case 'd' : buttonRelease('right-button'); break;
+      case 'd' : buttonRelease('right-button','r'); break;
       case ' ' :  buttonRelease('capture-button'); captureImage();break;
       default:
     }
@@ -75,12 +78,12 @@ $(document).ready(function(){
     if(e.originalEvent.wheelDelta/120 > 0 || e.originalEvent.detail < 0){
       buttonPressed('camera-up','u');
       setTimeout(function(){
-        buttonRelease('camera-up');
+        buttonRelease('camera-up','u');
       },250);
     }else{
       buttonPressed('camera-down','d');
       setTimeout(function(){
-        buttonRelease('camera-down');
+        buttonRelease('camera-down','d');
       },250);
     }
   })
