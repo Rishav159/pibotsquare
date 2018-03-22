@@ -1,16 +1,30 @@
 function buttonPressed(btn){
   $('#'+btn).addClass("active");
 }
+
 function buttonRelease(btn){
   $('#'+btn).removeClass("active");
 }
+
+function getBase64Image(img) {
+  var canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+  var dataURL = canvas.toDataURL("image/jpeg");
+  return dataURL;
+}
+
 function captureImage(){
-  let link = document.createElement("a");
-  let href = $('#currentImage').attr('src');
   let date = new Date();
-  let fileName = date.toLocaleDateString().replace(new RegExp('/',"g"),'-')+'_'+date.toLocaleTimeString().replace(new RegExp(':',"g"),'-').replace(new RegExp(' ',"g"),'-')+'.png';
-  link.setAttribute("href", href);
-  link.setAttribute("download", fileName);
+  let fileName = date.toLocaleDateString().replace(new RegExp('/',"g"),'-')+'_'+date.toLocaleTimeString().replace(new RegExp(':',"g"),'-').replace(new RegExp(' ',"g"),'-')+'.jpg';
+  let ele = $('#currentImage');
+  let b64 = getBase64Image(document.getElementById('currentImage'));
+  console.log(b64);
+  let link = document.createElement('a')
+  link.href = b64;
+  link.download = fileName;
   $('#captured-image').html("");
   $('#captured-image').append(link);
   link.click();
