@@ -1,8 +1,8 @@
 var socket;
 function buttonPressed(btn,key){
   $('#'+btn).addClass("active");
+  console.log(key);
   if(key){
-    console.log(socket);
     socket.emit('move',key);
   }
 }
@@ -45,13 +45,13 @@ $(document).ready(function(){
   $(document).keydown(function(e){
     let key = e.originalEvent.key;
     switch (key) {
-      case 'ArrowUp':
+      case 'ArrowUp': buttonPressed('camera-up','u'); break;
       case 'w' : buttonPressed('forward-button','f'); break;
-      case 'ArrowDown':
+      case 'ArrowDown':buttonPressed('camera-down','d');break;
       case 's' : buttonPressed('back-button','b'); break;
-      case 'ArrowLeft':
+      case 'ArrowLeft':buttonPressed('camera-left','x');break;
       case 'a' : buttonPressed('left-button','l'); break;
-      case 'ArrowRight':
+      case 'ArrowRight':buttonPressed('camera-right','y');break;
       case 'd' : buttonPressed('right-button','r'); break;
       case ' ': buttonPressed('capture-button'); break;
       default:
@@ -61,13 +61,13 @@ $(document).ready(function(){
   $(document).keyup(function(e){
     let key = e.originalEvent.key;
     switch (key) {
-      case 'ArrowUp':
+      case 'ArrowUp':buttonRelease('camera-up','u');break;
       case 'w' : buttonRelease('forward-button','f'); break;
-      case 'ArrowDown':
+      case 'ArrowDown':buttonRelease('camera-down','d');break;
       case 's' : buttonRelease('back-button','b'); break;
-      case 'ArrowLeft':
+      case 'ArrowLeft':buttonRelease('camera-left','x');break;
       case 'a' : buttonRelease('left-button','l'); break;
-      case 'ArrowRight':
+      case 'ArrowRight':buttonRelease('camera-right','y');break;
       case 'd' : buttonRelease('right-button','r'); break;
       case ' ' :  buttonRelease('capture-button'); captureImage();break;
       default:

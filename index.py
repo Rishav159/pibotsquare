@@ -12,8 +12,8 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.cleanup()
 
-GPIO.setup(4, GPIO.OUT)  # right 
-GPIO.setup(17, GPIO.OUT) # right 
+GPIO.setup(4, GPIO.OUT)  # right
+GPIO.setup(17, GPIO.OUT) # right
 GPIO.setup(27, GPIO.OUT)  # left
 GPIO.setup(22, GPIO.OUT)   # left
 
@@ -57,7 +57,10 @@ def camera_up():
     print("Camera Up")
 def camera_down():
     print("Camera down")
-
+def camera_left():
+    print("Camera Left")
+def camera_right():
+    print("Camera Right")
 #-------------------------------------------------
 
 @app.route('/')
@@ -94,10 +97,13 @@ def handle_message(move):
         camera_up()
     elif move == 'd':
         camera_down()
+    elif move == 'x':
+        camera_left()
+    elif move == 'y':
+        camera_right()
     else:
         GPIO.cleanup()
 
 if __name__ == '__main__':
     socketio.run(app,host='0.0.0.0', debug=False)
     #app.run(host='0.0.0.0', debug=False)
-
