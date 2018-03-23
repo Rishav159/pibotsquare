@@ -83,16 +83,12 @@ def handle_message(move):
     print (move)
     if move == 'f':
         forward()
-        stop()
     elif move == 'b':
         backward()
-        stop()
     elif move == 'l':
         left()
-        stop()
     elif move == 'r':
         right()
-        stop()
     elif move == 'u':
         camera_up()
     elif move == 'd':
