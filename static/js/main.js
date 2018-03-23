@@ -1,7 +1,6 @@
 var socket;
 function buttonPressed(btn,key){
   $('#'+btn).addClass("active");
-  console.log(key);
   if(key){
     socket.emit('move',key);
   }
@@ -61,13 +60,13 @@ $(document).ready(function(){
   $(document).keyup(function(e){
     let key = e.originalEvent.key;
     switch (key) {
-      case 'ArrowUp':buttonRelease('camera-up','u');break;
+      case 'ArrowUp':buttonRelease('camera-up');break;
       case 'w' : buttonRelease('forward-button','f'); break;
-      case 'ArrowDown':buttonRelease('camera-down','d');break;
+      case 'ArrowDown':buttonRelease('camera-down');break;
       case 's' : buttonRelease('back-button','b'); break;
-      case 'ArrowLeft':buttonRelease('camera-left','x');break;
+      case 'ArrowLeft':buttonRelease('camera-left');break;
       case 'a' : buttonRelease('left-button','l'); break;
-      case 'ArrowRight':buttonRelease('camera-right','y');break;
+      case 'ArrowRight':buttonRelease('camera-right');break;
       case 'd' : buttonRelease('right-button','r'); break;
       case ' ' :  buttonRelease('capture-button'); captureImage();break;
       default:
