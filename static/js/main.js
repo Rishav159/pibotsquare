@@ -1,12 +1,16 @@
 var socket;
+var hold = false;
 function buttonPressed(btn,key){
   $('#'+btn).addClass("active");
-  if(key){
+  console.log(hold);
+  if(key && !hold){
     socket.emit('move',key);
   }
+  hold = true;
 }
 
 function buttonRelease(btn,key){
+  hold = false;
   $('#'+btn).removeClass("active");
   if(key){
     socket.emit('move','s');
