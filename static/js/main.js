@@ -57,6 +57,7 @@ $(document).ready(function(){
       case 'ArrowRight':buttonPressed('camera-right','y');break;
       case 'd' : buttonPressed('right-button','r'); break;
       case ' ': buttonPressed('capture-button'); break;
+      case 'q' : socket.emit('move','q');
       default:
     }
   });

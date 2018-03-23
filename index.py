@@ -13,6 +13,11 @@ app = Flask(__name__,static_url_path='/static')
 socketio = SocketIO(app)
 #----------------------Reddy-Area-----------------
 #-------------------------------------------------
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
 
 @app.route('/')
 def root_dir():
@@ -31,7 +36,10 @@ def video_feed():
 
 @socketio.on('move')
 def handle_message(move):
-    ser.write(bytes(move.encode('ascii')))
+    if move == 'q':
+        shutdown_server()
+    else:
+        ser.write(bytes(move.encode('ascii')))
 if __name__ == '__main__':
     socketio.run(app,host='0.0.0.0', debug=False)
     #app.run(host='0.0.0.0', debug=False)
