@@ -1,6 +1,6 @@
 import numpy as np
 import os.path
-from flask import Flask, Response, send_from_directory, render_template
+from flask import Flask, Response, send_from_directory, render_template, request
 from camera import VideoCamera
 from flask_socketio import SocketIO, emit
 from serial import Serial
@@ -37,6 +37,7 @@ def video_feed():
 @socketio.on('move')
 def handle_message(move):
     if move == 'q':
+        print("Asked to shut down")
         shutdown_server()
     else:
         ser.write(bytes(move.encode('ascii')))
